@@ -54,6 +54,7 @@ p {
     color: var(--subtext-color);
     font-size: 1rem;
     font-weight: 400; /* Regular for paragraphs */
+    margin-bottom: 15px; /* Space between paragraphs in About section */
 }
 
 .btn {
@@ -189,6 +190,26 @@ nav ul li a:hover {
 #home .stats h3 {
     font-size: 2rem;
     color: var(--text-color);
+}
+
+/* About Section */
+#about {
+    padding: 60px 20px;
+  
+    border-radius: 10px;
+    margin: 20px auto;
+    max-width: 1200px;
+    animation: fadeIn 1s ease-in;
+}
+
+#about h2 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+#about p {
+    text-align: justify;
+    line-height: 1.8;
 }
 
 /* Recent Works */
@@ -446,7 +467,8 @@ footer {
     #blogs .blog-post,
     #skills .skill,
     #services .service,
-    #contact .form, #contact .info {
+    #contact .form, #contact .info,
+    #about {
         flex: 1 1 100%;
     }
 }
