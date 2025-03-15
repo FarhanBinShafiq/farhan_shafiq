@@ -1,4 +1,3 @@
-
 // Theme Toggle Functionality
 const toggleTheme = () => {
     const currentTheme = document.documentElement.getAttribute('data-theme');
