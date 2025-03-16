@@ -14,6 +14,7 @@
     --card-bg: #2a2a4e;
     --accent-color: #a29bfe;
     --accent-hover: #7f78d2;
+    --highlight-color: #ff6f61; /* For Data Science emphasis */
 }
 
 /* Light Theme Variables */
@@ -24,6 +25,7 @@
     --card-bg: #fff;
     --accent-color: #6a5acd;
     --accent-hover: #483d8b;
+    --highlight-color: #e63946; /* Adjusted for light theme */
 }
 
 body {
@@ -160,11 +162,48 @@ nav ul.nav-links li a:hover {
 
 #home .info h1 {
     font-size: 3.5rem;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
 }
 
-#home .info h1 span {
+#home .role-container {
+    display: inline-block;
+    overflow: hidden;
+    position: relative;
+    min-width: 0;
+}
+
+#home .role {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    font-size: 1.5rem;
     color: var(--text-color);
+    opacity: 0;
+    white-space: nowrap;
+    animation: slideInSmooth 2s ease-in-out forwards;
+}
+
+#home .role:nth-child(1) {
+    animation-delay: 0s;
+}
+
+#home .role:nth-child(2) {
+    animation-delay: 0.7s;
+}
+
+#home .role:nth-child(3) {
+    animation-delay: 1.4s;
+}
+
+#home .role.final {
+    font-size: 2rem; /* Larger for emphasis */
+    color: var(--highlight-color); /* Highlight color */
+    font-weight: 700;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 #home .info p {
@@ -189,7 +228,7 @@ nav ul.nav-links li a:hover {
 
 #home .stats {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     width: 100%;
     max-width: 800px;
     margin-top: 40px;
@@ -203,6 +242,7 @@ nav ul.nav-links li a:hover {
     font-size: 2rem;
     color: var(--text-color);
 }
+
 
 /* About Section */
 #about {
@@ -456,6 +496,17 @@ footer {
     to { transform: translateX(0); }
 }
 
+@keyframes slideInSmooth {
+    from {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     nav .hamburger {
@@ -493,6 +544,14 @@ footer {
 
     #home h1 {
         font-size: 2.5rem;
+    }
+
+    #home .role {
+        font-size: 1.2rem;
+    }
+
+    #home .role.final {
+        font-size: 1.5rem; /* Adjusted for mobile */
     }
 
     #home .stats {
