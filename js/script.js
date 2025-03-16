@@ -5,21 +5,59 @@ const toggleTheme = () => {
     document.documentElement.setAttribute('data-theme', newTheme);
     localStorage.setItem('theme', newTheme);
     document.querySelector('.theme-toggle').textContent = newTheme === 'light' ? '🌙' : '☀️';
+    console.log('Theme switched to:', newTheme); // Debug log
 };
 
 // Load Theme from localStorage
-const savedTheme = localStorage.getItem('theme') || 'dark';
-document.documentElement.setAttribute('data-theme', savedTheme);
-document.querySelector('.theme-toggle').textContent = savedTheme === 'light' ? '🌙' : '☀️';
+document.addEventListener('DOMContentLoaded', () => {
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    document.querySelector('.theme-toggle').textContent = savedTheme === 'light' ? '🌙' : '☀️';
+    console.log('Initial theme loaded:', savedTheme); // Debug log
+});
 
-// Smooth scrolling for navigation
+// Hamburger Menu Toggle
+const toggleMenu = () => {
+    const navLinks = document.querySelector('.nav-links');
+    const hamburger = document.querySelector('.hamburger');
+    const isActive = navLinks.classList.contains('active');
+
+    // Toggle the active class on nav-links and hamburger
+    navLinks.classList.toggle('active');
+    hamburger.classList.toggle('active');
+
+    // Update the hamburger icon
+    hamburger.textContent = isActive ? '☰' : '✕';
+
+    // Prevent body scrolling when menu is open
+    document.body.style.overflow = isActive ? 'auto' : 'hidden';
+
+    // Ensure the menu closes properly by resetting visibility transition delay
+    if (!isActive) {
+        navLinks.style.transition = 'transform 0.3s ease-in-out, opacity 0.3s ease-in-out';
+    } else {
+        navLinks.style.transition = 'transform 0.3s ease-in-out, opacity 0.3s ease-in-out, visibility 0s linear 0.3s';
+    }
+};
+
+// Smooth scrolling for navigation and close menu on link click
 document.querySelectorAll('nav a').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-            behavior: 'smooth'
-        });
-        toggleMenu();
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+
+        if (targetElement) {
+            targetElement.scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+
+        // Close the menu after clicking a link (on mobile)
+        const navLinks = document.querySelector('.nav-links');
+        if (navLinks.classList.contains('active')) {
+            toggleMenu();
+        }
     });
 });
 
@@ -29,13 +67,17 @@ window.addEventListener('scroll', () => {
     backToTop.style.display = window.scrollY > 300 ? 'block' : 'none';
 });
 
-// Hamburger Menu Toggle
-const toggleMenu = () => {
+// Reset menu state on window resize
+window.addEventListener('resize', () => {
     const navLinks = document.querySelector('.nav-links');
     const hamburger = document.querySelector('.hamburger');
-    navLinks.classList.toggle('active');
-    hamburger.textContent = navLinks.classList.contains('active') ? '✕' : '☰';
-};
+    if (window.innerWidth > 768 && navLinks.classList.contains('active')) {
+        navLinks.classList.remove('active');
+        hamburger.classList.remove('active');
+        hamburger.textContent = '☰';
+        document.body.style.overflow = 'auto';
+    }
+});
 
 // Initialize Animations on Load
 document.addEventListener('DOMContentLoaded', () => {
