@@ -4,10 +4,7 @@ const toggleTheme = () => {
     const newTheme = currentTheme === 'light' ? 'dark' : 'light';
     document.documentElement.setAttribute('data-theme', newTheme);
     localStorage.setItem('theme', newTheme);
-
-    // Update toggle button icon
-    const toggleButton = document.querySelector('.theme-toggle');
-    toggleButton.textContent = newTheme === 'light' ? '🌙' : '☀️';
+    document.querySelector('.theme-toggle').textContent = newTheme === 'light' ? '🌙' : '☀️';
 };
 
 // Load Theme from localStorage
@@ -22,25 +19,14 @@ document.querySelectorAll('nav a').forEach(anchor => {
         document.querySelector(this.getAttribute('href')).scrollIntoView({
             behavior: 'smooth'
         });
-
-        // Close the mobile menu after clicking a link
-        const navLinks = document.querySelector('.nav-links');
-        const hamburger = document.querySelector('.hamburger');
-        if (navLinks.classList.contains('active')) {
-            navLinks.classList.remove('active');
-            hamburger.textContent = '☰'; // Reset to hamburger icon
-        }
+        toggleMenu();
     });
 });
 
 // Show/hide back-to-top button
 const backToTop = document.querySelector('.back-to-top');
 window.addEventListener('scroll', () => {
-    if (window.scrollY > 300) {
-        backToTop.style.display = 'block';
-    } else {
-        backToTop.style.display = 'none';
-    }
+    backToTop.style.display = window.scrollY > 300 ? 'block' : 'none';
 });
 
 // Hamburger Menu Toggle
@@ -48,11 +34,23 @@ const toggleMenu = () => {
     const navLinks = document.querySelector('.nav-links');
     const hamburger = document.querySelector('.hamburger');
     navLinks.classList.toggle('active');
-
-    // Toggle between hamburger and close icon
-    if (navLinks.classList.contains('active')) {
-        hamburger.textContent = '✕'; // Change to close icon
-    } else {
-        hamburger.textContent = '☰'; // Change back to hamburger icon
-    }
+    hamburger.textContent = navLinks.classList.contains('active') ? '✕' : '☰';
 };
+
+// Initialize Animations on Load
+document.addEventListener('DOMContentLoaded', () => {
+    // Delay animations to ensure they trigger visibly
+    setTimeout(() => {
+        const roles = document.querySelectorAll('.animated-role');
+        let index = 0;
+
+        function showNextRole() {
+            roles.forEach(role => role.style.opacity = '0');
+            roles[index].style.opacity = '1';
+            index = (index + 1) % roles.length;
+            setTimeout(showNextRole, 3000);
+        }
+
+        showNextRole();
+    }, 500);
+});
