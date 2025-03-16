@@ -86,6 +86,7 @@ nav .container {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
 }
 
 nav .logo {
@@ -93,17 +94,28 @@ nav .logo {
     font-weight: 700;
 }
 
-nav ul {
+nav .hamburger {
+    display: none; /* Hidden by default on desktop */
+    font-size: 2rem;
+    cursor: pointer;
+    color: var(--text-color);
+    background: none;
+    border: none;
+    padding: 10px;
+}
+
+nav ul.nav-links {
     list-style: none;
     display: flex;
     align-items: center;
+    transition: transform 0.5s ease-in-out; /* Slower transition */
 }
 
-nav ul li {
+nav ul.nav-links li {
     margin-left: 20px;
 }
 
-nav ul li a {
+nav ul.nav-links li a {
     color: var(--text-color);
     text-decoration: none;
     font-size: 1rem;
@@ -111,7 +123,7 @@ nav ul li a {
     transition: color 0.3s;
 }
 
-nav ul li a:hover {
+nav ul.nav-links li a:hover {
     color: var(--accent-color);
 }
 
@@ -195,7 +207,7 @@ nav ul li a:hover {
 /* About Section */
 #about {
     padding: 60px 20px;
-  
+    background: var(--card-bg);
     border-radius: 10px;
     margin: 20px auto;
     max-width: 1200px;
@@ -439,12 +451,39 @@ footer {
     to { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes slideIn {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(0); }
+}
+
 /* Responsive */
 @media (max-width: 768px) {
-    nav ul {
+    nav .hamburger {
+        display: block; /* Show hamburger icon on mobile */
+    }
+
+    nav ul.nav-links {
+        display: none; /* Hide menu by default on mobile */
         flex-direction: column;
-        align-items: center;
-        gap: 10px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh; /* Full height for mobile menu */
+        background: var(--bg-color);
+        padding: 60px 20px 20px 20px; /* Adjust padding for better spacing */
+        transform: translateX(-100%); /* Start off-screen to the left */
+        z-index: -1; /* Behind the nav bar */
+    }
+
+    nav ul.nav-links.active {
+        display: flex; /* Show menu when active */
+        animation: slideIn 0.5s ease-in-out forwards; /* Slower slide-in animation */
+    }
+
+    nav ul.nav-links li {
+        margin: 15px 0; /* More spacing between items */
+        text-align: center;
     }
 
     #home .home-content {

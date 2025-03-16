@@ -4,7 +4,7 @@ const toggleTheme = () => {
     const newTheme = currentTheme === 'light' ? 'dark' : 'light';
     document.documentElement.setAttribute('data-theme', newTheme);
     localStorage.setItem('theme', newTheme);
-    
+
     // Update toggle button icon
     const toggleButton = document.querySelector('.theme-toggle');
     toggleButton.textContent = newTheme === 'light' ? '🌙' : '☀️';
@@ -22,6 +22,14 @@ document.querySelectorAll('nav a').forEach(anchor => {
         document.querySelector(this.getAttribute('href')).scrollIntoView({
             behavior: 'smooth'
         });
+
+        // Close the mobile menu after clicking a link
+        const navLinks = document.querySelector('.nav-links');
+        const hamburger = document.querySelector('.hamburger');
+        if (navLinks.classList.contains('active')) {
+            navLinks.classList.remove('active');
+            hamburger.textContent = '☰'; // Reset to hamburger icon
+        }
     });
 });
 
@@ -34,3 +42,17 @@ window.addEventListener('scroll', () => {
         backToTop.style.display = 'none';
     }
 });
+
+// Hamburger Menu Toggle
+const toggleMenu = () => {
+    const navLinks = document.querySelector('.nav-links');
+    const hamburger = document.querySelector('.hamburger');
+    navLinks.classList.toggle('active');
+
+    // Toggle between hamburger and close icon
+    if (navLinks.classList.contains('active')) {
+        hamburger.textContent = '✕'; // Change to close icon
+    } else {
+        hamburger.textContent = '☰'; // Change back to hamburger icon
+    }
+};
