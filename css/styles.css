@@ -201,7 +201,7 @@ nav ul.nav-links li a:hover {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(26, 26, 46, 0.7);
+   
     z-index: 0;
     animation: overlayPulse 5s infinite;
 }
@@ -326,7 +326,7 @@ nav ul.nav-links li a:hover {
 /* About Section */
 #about {
     padding: 60px 20px;
-    background: var(--card-bg);
+ 
     border-radius: 10px;
     margin: 20px auto;
     max-width: 1200px;
